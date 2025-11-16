@@ -4,9 +4,18 @@ include("config.php");
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['id']) || $_SESSION['role'] != 'teacher') {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-    exit(); 
+if (!isset($_SESSION['uid'])) {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized - Not logged in']);
+    exit();
+}
+
+$userId = $_SESSION['uid'];
+$roleCheck = mysqli_query($conn, "SELECT role FROM users WHERE id = '$userId'");
+$userRole = mysqli_fetch_assoc($roleCheck);
+
+if (!$userRole || $userRole['role'] != 'teacher') {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized - Not a teacher']);
+    exit();
 }
 
 $booking_id = mysqli_real_escape_string($conn, $_POST['booking_id'] ?? '');
@@ -18,7 +27,7 @@ if (empty($booking_id) || empty($status)) {
     exit();
 }
 
-$teacher_id = mysqli_real_escape_string($conn, $_SESSION['id']);
+$teacher_id = mysqli_real_escape_string($conn, $_SESSION['uid']);
 
 // Verify this booking belongs to this teacher
 $check_sql = "SELECT s_no FROM bookings WHERE s_no = '$booking_id' AND teacher_id = '$teacher_id'";

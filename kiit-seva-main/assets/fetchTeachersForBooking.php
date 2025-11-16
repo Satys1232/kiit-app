@@ -4,8 +4,17 @@ include("config.php");
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['id']) || $_SESSION['role'] != 'student') {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+if (!isset($_SESSION['uid'])) {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized - Not logged in']);
+    exit();
+}
+
+$userId = $_SESSION['uid'];
+$roleCheck = mysqli_query($conn, "SELECT role FROM users WHERE id = '$userId'");
+$userRole = mysqli_fetch_assoc($roleCheck);
+
+if (!$userRole || $userRole['role'] != 'student') {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized - Not a student']);
     exit();
 }
 

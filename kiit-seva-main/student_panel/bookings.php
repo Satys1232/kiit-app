@@ -116,12 +116,21 @@
             
             const teacher = teachersData.find(t => t.id === teacherId);
             if (teacher) {
-                const slots = JSON.parse(teacher.available_slots || '{}');
+                let slots = {};
+                try {
+                    slots = JSON.parse(teacher.available_slots || '{}');
+                    console.log('Available slots:', slots);
+                } catch(e) {
+                    console.error('Error parsing slots:', e);
+                }
                 
                 document.getElementById('booking_date').onchange = function() {
+                    const selectedDate = new Date(this.value + 'T00:00:00');
                     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-                    const dayName = days[new Date(this.value).getDay()];
+                    const dayName = days[selectedDate.getDay()];
                     const timeSlots = slots[dayName] || [];
+                    
+                    console.log('Selected date:', this.value, 'Day:', dayName, 'Slots:', timeSlots);
                     
                     if (timeSlots.length === 0) {
                         document.getElementById('time_slot').innerHTML = '<option value="">No slots available for this day</option>';
@@ -130,6 +139,12 @@
                             timeSlots.map(slot => `<option value="${slot}">${slot}</option>`).join('');
                     }
                 };
+                
+                // Trigger change if date is already selected
+                const dateInput = document.getElementById('booking_date');
+                if (dateInput.value) {
+                    dateInput.onchange();
+                }
             }
         }
         

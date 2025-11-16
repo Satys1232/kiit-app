@@ -4,12 +4,21 @@ include("config.php");
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['id']) || $_SESSION['role'] != 'student') {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+if (!isset($_SESSION['uid'])) {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized - Not logged in']);
     exit();
 }
 
-$student_id = $_SESSION['id'];
+$userId = $_SESSION['uid'];
+$roleCheck = mysqli_query($conn, "SELECT role FROM users WHERE id = '$userId'");
+$userRole = mysqli_fetch_assoc($roleCheck);
+
+if (!$userRole || $userRole['role'] != 'student') {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized - Not a student']);
+    exit();
+}
+
+$student_id = $_SESSION['uid'];
 $teacher_id = mysqli_real_escape_string($conn, $_POST['teacher_id'] ?? '');
 $booking_date = mysqli_real_escape_string($conn, $_POST['booking_date'] ?? '');
 $time_slot = mysqli_real_escape_string($conn, $_POST['time_slot'] ?? '');
