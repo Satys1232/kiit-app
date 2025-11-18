@@ -16,6 +16,7 @@
         <div class="navbar">
             <a href="index.php"><span class="material-icons-sharp">home</span><h3>Home</h3></a>
             <a href="bookings.php" class="active"><span class="material-icons-sharp">calendar_today</span><h3>Book Teacher</h3></a>
+<a href="campus-map.php"><span class="material-icons-sharp">map</span><h3>Campus Map</h3></a>
             <a href="my-bookings.php"><span class="material-icons-sharp">history</span><h3>My Bookings</h3></a>
             <a href="logout.php"><span class="material-icons-sharp">logout</span><h3>Logout</h3></a>
         </div>

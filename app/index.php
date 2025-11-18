@@ -18,6 +18,7 @@
                   streamline processes, manage resources, track student data, facilitate
                   communication, and enhance administrative tasks effectively.
                 </p>
+                <a href="campus-map.php"><span class="material-icons-sharp">map</span><h3>Campus Map</h3></a>
                 <div class="cta">
                   <a href="login.php" class="btn">Get started</a>
                 </div>
