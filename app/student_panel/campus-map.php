@@ -188,7 +188,7 @@
                 </div>
                 
                 <div class="map-image-wrapper" id="mapWrapper">
-                    <img src="./images/campus-map.jpg" alt="KIIT Campus Map" id="campusMap">
+                    <img src="./images/campus-map.png" alt="KIIT Campus Map" id="campusMap">
                 </div>
                 
                 <div class="zoom-controls">
@@ -218,7 +218,7 @@
     
     <div class="fullscreen-overlay" id="fullscreenOverlay" onclick="closeFullscreen()">
         <span class="close-fullscreen">&times;</span>
-        <img src="./images/campus-map.jpg" alt="KIIT Campus Map Fullscreen">
+        <img src="./images/campus-map.png" alt="KIIT Campus Map Fullscreen">
     </div>
     
     <script>
@@ -232,8 +232,8 @@
         
         function downloadMap() {
             const link = document.createElement('a');
-            link.href = './images/campus-map.jpg';
-            link.download = 'KIIT-Campus-Map.jpg';
+            link.href = './images/campus-map.png';
+            link.download = 'KIIT-Campus-Map.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
